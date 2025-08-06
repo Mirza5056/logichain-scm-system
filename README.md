@@ -62,7 +62,7 @@ logichain-scm-system/
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/logichain-scm-system.git
+git clone https://github.com/Mirza5056/logichain-scm-system.git
 
 # Navigate to the project folder
 cd logichain-scm-system
