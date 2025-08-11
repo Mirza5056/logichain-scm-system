@@ -25,24 +25,31 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Column(name = "username", nullable = false, unique = true)
     private String username;
+    
     @Column(name = "email", nullable = false, unique = true)
     private String email;  
+    
     @Column(name = "password", nullable = false)  
     private String password;
+    
     @Column(name = "reset_token")
     private String resetToken;
+    
     @Column(name = "reset_expiry")
     public LocalDateTime tokenExpiry;
+    
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
+    
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updateAt;
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name = "role")
+    // /@Column(name = "role")
     @JoinTable(
         name = "users_roles",
         joinColumns = @JoinColumn(name = "user_id"),

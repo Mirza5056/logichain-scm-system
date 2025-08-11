@@ -16,6 +16,7 @@
         <module>auth-service</module>
         <module>common-lib</module>
         <module>inventory-service</module>
+        <module>order-service</module>
     </modules>
 
     <properties>

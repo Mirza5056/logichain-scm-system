@@ -10,7 +10,7 @@ public class UserDTO {
     private String username;
     private String email;
     private Set<Role> roles;
-
+    public UserDTO() {}
     public UserDTO(Long id, String username, String email, Set<Role> roles) {
         this.id = id;
         this.username = username;
