@@ -1,4 +1,6 @@
 package com.logichain.common.model;
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +14,7 @@ public class Product {
     @Column(name = "hsn_code", nullable = false, unique = true)
     private String hsnCode;
     @Column(name = "price",nullable = false)
-    private Double price;
+    private BigDecimal price;
     @Column(name = "product_created", nullable = false)
     private String productCreated;
     @Column(name = "product_expiry", nullable = false)
@@ -32,10 +34,10 @@ public class Product {
     public String getHsnCode() {
         return hsnCode;
     }
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public void setHsnCode(String hsnCode) {

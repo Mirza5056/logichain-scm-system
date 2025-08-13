@@ -2,6 +2,8 @@ package com.logichain.order_purchase.model;
 
 import java.math.BigDecimal;
 
+import com.logichain.common.model.Product;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,9 +26,10 @@ public class OrderItem {
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+    @ManyToOne
     @NotNull(message = "Product ID cannot be null")
-    @Column(name = "product_id", nullable = false)
-    private Long productId;
+    @JoinColumn(name = "product_id", nullable = false,referencedColumnName = "id")
+    private Product product;
     @NotNull(message = "Quantity cannot be null")
     @Positive(message = "Quantity must be greater than 0")
     @Column(name = "quantity", nullable = false)
@@ -48,11 +51,11 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
     public Integer getQuantity() {
         return quantity;
