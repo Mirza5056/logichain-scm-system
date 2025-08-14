@@ -6,7 +6,16 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import com.logichain.common.model.Product;
+import com.logichain.common.model.Users;
+import com.logichain.common.repository.ProductRepository;
+import com.logichain.common.repository.UserRepository;
+import com.logichain.order_purchase.dto.OrderDetailsDTO;
+import com.logichain.order_purchase.dto.OrderRequestDTO;
 import com.logichain.order_purchase.model.Order;
+import com.logichain.order_purchase.model.OrderItem;
 import com.logichain.order_purchase.repository.OrderItemRepository;
 import com.logichain.order_purchase.repository.OrderRepository;
 
@@ -18,34 +27,95 @@ public class OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private OrderItemRepository orderItemRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
-    public Order createOrder(Order order) {
-        if(order.getItems() == null || order.getItems().isEmpty()) {
-            throw new RuntimeException("Order must be contain at one item");
+    public Order createOrder(OrderRequestDTO orderRequest) {
+        if (orderRequest.getItems() == null || orderRequest.getItems().isEmpty()) {
+            throw new RuntimeException("Order must contain at least one item");
         }
-        BigDecimal total = order.getItems().stream().map(item -> 
-            item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))).reduce(BigDecimal.ZERO,BigDecimal::add);
+
+        // Fetch customer
+        Users customer = userRepository.findById(orderRequest.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Invalid customer id"));
+
+        Order order = new Order();
+        order.setUsers(customer);
+        order.setOrderType(Order.OrderType.PURCHASE);
+        order.setOrderStatus(Order.OrderStatus.CREATED);
+        order.setCreatedAt(LocalDateTime.now());
+
+        // Build order items from request DTOs
+        List<OrderItem> items = orderRequest.getItems().stream().map(itemReq -> {
+            if (itemReq.getProductId() == null) {
+                throw new RuntimeException("Product ID must not be null");
+            }
+
+            Product product = productRepository.findById(itemReq.getProductId())
+                    .orElseThrow(() -> new RuntimeException("Invalid product ID: " + itemReq.getProductId()));
+
+            OrderItem item = new OrderItem();
+            item.setProduct(product);
+            item.setQuantity(itemReq.getQuantity());
+            item.setPrice(product.getPrice()); // Always use DB price
+            item.setOrder(order);
+            return item;
+        }).toList();
+
+        order.setItems(items);
+
+        // Calculate total
+        BigDecimal total = items.stream()
+                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         order.setTotalAmount(total);
-        order.setCreatedAt(LocalDateTime.now());
-        order.setOrderStatus(Order.OrderStatus.CREATED);
-        // Set the back-reference in eah item
-        order.getItems().forEach(item -> item.setOrder(order));
+
         return orderRepository.save(order);
     }
 
-    public Order updateOrderStatus(Long orderId, Order.OrderStatus status) {
-        Order order = getOrderById(orderId);
-        order.setOrderStatus(status);
-        return orderRepository.save(order);
-    }
-    public Order getOrderById(Long id) {
-        return orderRepository.findOrderById(id)
-                .orElseThrow(() -> new RuntimeException("Invalid order id"));
+    // public Order updateOrderStatus(Long orderId, Order.OrderStatus status) {
+    //     Order order = getOrderById(orderId);
+    //     order.setOrderStatus(status);
+    //     return orderRepository.save(order);
+    // }
+
+    public List<OrderDetailsDTO> getOrderById(Long id) {
+        List<Order> orders = orderRepository.findOrderById(id);
+        if(orders == null || orders.isEmpty()) {
+            throw new RuntimeException("Invalid order id");
+        }
+        return orders.stream()
+                .flatMap(order -> order.getItems().stream().map(item -> new OrderDetailsDTO(
+                        order.getUsers().getUsername(),
+                        order.getUsers().getEmail(),
+                        item.getProduct().getName(),
+                        item.getQuantity(),
+                        item.getPrice(),
+                        order.getTotalAmount(),
+                        order.getCreatedAt(),
+                        order.getOrderType(),
+                        order.getOrderStatus())))
+                .collect(Collectors.toList());
     }
 
-    public List<Order> getAllOrderList() {
-        return orderRepository.findAll();
+    public List<OrderDetailsDTO> getAllOrderDetails() {
+        List<Order> orders = orderRepository.findAll();
+
+        return orders.stream()
+                .flatMap(order -> order.getItems().stream().map(item -> new OrderDetailsDTO(
+                        order.getUsers().getUsername(),
+                        order.getUsers().getEmail(),
+                        item.getProduct().getName(),
+                        item.getQuantity(),
+                        item.getPrice(),
+                        order.getTotalAmount(),
+                        order.getCreatedAt(),
+                        order.getOrderType(),
+                        order.getOrderStatus())))
+                .collect(Collectors.toList());
     }
 }

@@ -12,7 +12,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 		"com.logichain.common",
 		"com.logichain.auth",
 		"com.logichain.inventoryservice",
-		"com.logichain.order_purchase"
+		"com.logichain.order_purchase",
+		"com.logichain.suppliers"
 })
 public class AuthServiceApplication {
 

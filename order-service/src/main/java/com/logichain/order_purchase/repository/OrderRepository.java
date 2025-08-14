@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.logichain.order_purchase.model.Order;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
-    Optional<Order> findOrderById(Long id); 
+    List<Order> findOrderById(Long id); 
     //List<Order> findByCustomerId(Long orderId);
 }

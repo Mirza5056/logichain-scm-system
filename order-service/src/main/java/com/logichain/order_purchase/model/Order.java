@@ -47,6 +47,14 @@ public class Order {
     @Column(name = "order_type", nullable = false)
     private OrderType orderType;
 
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
     @NotNull(message = "select order type")
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

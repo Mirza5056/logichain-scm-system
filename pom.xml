@@ -17,6 +17,8 @@
         <module>common-lib</module>
         <module>inventory-service</module>
         <module>order-service</module>
+        <module>supplier-service</module>
+        <module>logistics-service</module>
     </modules>
 
     <properties>

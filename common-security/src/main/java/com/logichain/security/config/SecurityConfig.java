@@ -38,6 +38,8 @@ public class SecurityConfig {
                         "/users/**",
                         "/products/**",
                         "/warehouse/**",
+                        "/suppliers/**",
+                        "/purchaseorder/**",
                         "/orders/**",
                         "/inventory/**",
                         "/auth/forgot-password",
