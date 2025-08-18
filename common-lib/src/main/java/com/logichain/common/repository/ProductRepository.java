@@ -9,4 +9,5 @@ import com.logichain.common.model.Product;
 public interface ProductRepository extends JpaRepository<Product , Long> {
     Optional<Product> findById(Long id);
     boolean existsProductByName(String productName);
+    boolean existsHsnCodeByName(String hsnCode);
 }

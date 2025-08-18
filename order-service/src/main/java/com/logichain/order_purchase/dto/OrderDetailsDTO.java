@@ -7,6 +7,7 @@ import com.logichain.order_purchase.model.Order.OrderStatus;
 import com.logichain.order_purchase.model.Order.OrderType;
 
 public class OrderDetailsDTO {
+    private String orderId;
     private String customerName;
     private String customerEmail;
     private String productName;
@@ -16,6 +17,14 @@ public class OrderDetailsDTO {
     private LocalDateTime createdAt;
     private OrderType orderType;
     private OrderStatus orderStatus;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public String getCustomerName() {
         return customerName;
@@ -89,11 +98,12 @@ public class OrderDetailsDTO {
         this.orderStatus = orderStatus;
     }
 
-    public OrderDetailsDTO(String customerName, String customerEmail, String productName,
-                            Integer quantity, BigDecimal price, BigDecimal totalAmount,
-                            LocalDateTime createdAt, OrderType orderType, OrderStatus orderStatus) {
+    public OrderDetailsDTO( String orderId,String customerName, String customerEmail, String productName,
+            Integer quantity, BigDecimal price, BigDecimal totalAmount,
+            LocalDateTime createdAt, OrderType orderType, OrderStatus orderStatus) {
         this.customerName = customerName;
         this.customerEmail = customerEmail;
+        this.orderId = orderId;
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;

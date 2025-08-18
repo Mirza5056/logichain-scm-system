@@ -20,6 +20,9 @@ public class ProductService {
         if(productRepository.existsProductByName(product.getName())) {
             throw new RuntimeException("Product already exits.");
         }
+        if(productRepository.existsHsnCodeByName(product.getHsnCode())) {
+            throw new RuntimeException("HSN CODE already exits.");
+        }
         return productRepository.save(product);
     }
 

@@ -37,6 +37,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "order_id",unique = true,nullable = false)
+    private String orderId;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     @ManyToOne
     @NotNull(message = "Customer ID cannot be empty.")
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")

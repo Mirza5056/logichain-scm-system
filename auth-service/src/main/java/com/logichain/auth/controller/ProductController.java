@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.logichain.common.dto.MessageResponse;
 import com.logichain.common.model.Product;
 import com.logichain.inventoryservice.service.ProductService;
 
@@ -23,9 +24,10 @@ public class ProductController {
     @PostMapping("/addProduct")
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         try {
-            return ResponseEntity.ok(productService.createProduct(product));
+            productService.createProduct(product);
+            return ResponseEntity.ok(new MessageResponse(true, "product have been added."));
         } catch (RuntimeException r) {
-            return ResponseEntity.badRequest().body(r.getMessage());
+            return ResponseEntity.badRequest().body(new MessageResponse(false, r.getMessage()));
         }
     }
 

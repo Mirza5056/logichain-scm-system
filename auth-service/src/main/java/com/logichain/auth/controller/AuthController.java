@@ -22,6 +22,8 @@ import com.logichain.common.dto.MessageResponse;
 import com.logichain.security.model.CustomUserDetailsService;
 import com.logichain.security.util.JwtUtils;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -32,7 +34,8 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserService userService,CustomUserDetailsService userDetailsService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserService userService,
+            CustomUserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userService = userService;
@@ -54,13 +57,10 @@ public class AuthController {
                     .body(new MessageResponse(false, "Inavlid Email or password."));
         } catch (UsernameNotFoundException u) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse(false, "Email not found."));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new MessageResponse(false, "Something went wrong."));
-        }
+        }catch(RuntimeException re) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse(false, re.getMessage()));
+        } 
     }
-
-
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
@@ -78,12 +78,13 @@ public class AuthController {
             @RequestParam("newPassword") String newPassword) {
         try {
             boolean success = userService.resetPassword(token, newPassword);
-            if(success) {
+            if (success) {
                 return ResponseEntity.ok(new MessageResponse(true, "Password have been changed successfully."));
             } else {
                 return ResponseEntity.badRequest().body(new MessageResponse(success, "Invalid or expired token."));
             }
-            //return ResponseEntity.ok(new MessageResponse(true, "Password have been changed successfully."));
+            // return ResponseEntity.ok(new MessageResponse(true, "Password have been
+            // changed successfully."));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new MessageResponse(false, e.getMessage()));
         }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
+import com.logichain.common.dto.MessageResponse;
 import com.logichain.order_purchase.dto.OrderDetailsDTO;
 import com.logichain.order_purchase.dto.OrderRequestDTO;
 import com.logichain.order_purchase.model.Order;
@@ -25,7 +26,8 @@ public class OrderController {
     @PostMapping("/createOrder")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO order) {
         try {
-            return ResponseEntity.ok(orderService.createOrder(order));
+            orderService.createOrder(order);
+            return ResponseEntity.ok(new MessageResponse(true, "order have been placed"));
         } catch (RuntimeException r) {
             return ResponseEntity.badRequest().body(r.getMessage());
         }
@@ -54,13 +56,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAllOrderDetails());
     }
 
-    @GetMapping("/getOrderById/{id}")
-    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+    @GetMapping("/getOrderById")
+    public ResponseEntity<?> getOrderById(@RequestParam String orderId) {
         try
         {
-            return ResponseEntity.ok(orderService.getOrderById(id));
+            return ResponseEntity.ok(orderService.getOrderById(orderId));
         }catch(RuntimeException r) {
-            return ResponseEntity.badRequest().body(r.getMessage());
+            return ResponseEntity.badRequest().body(new MessageResponse(false, r.getMessage()));
         }
     }
 }
