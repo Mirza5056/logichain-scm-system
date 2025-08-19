@@ -22,9 +22,6 @@ import com.logichain.common.dto.MessageResponse;
 import com.logichain.security.model.CustomUserDetailsService;
 import com.logichain.security.util.JwtUtils;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")

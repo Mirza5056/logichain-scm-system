@@ -11,7 +11,7 @@ import com.logichain.common.model.Users;
 import com.logichain.common.repository.UserRepository;
 
 
-
+ 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired

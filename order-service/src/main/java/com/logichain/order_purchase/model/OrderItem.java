@@ -3,7 +3,6 @@ package com.logichain.order_purchase.model;
 import java.math.BigDecimal;
 
 import com.logichain.common.model.Product;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class OrderItem {
     private Long id;
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private Order order;    
     @ManyToOne
     @NotNull(message = "Product ID cannot be null")
     @JoinColumn(name = "product_id", nullable = false,referencedColumnName = "id")

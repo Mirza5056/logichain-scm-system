@@ -13,10 +13,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 		"com.logichain.auth",
 		"com.logichain.inventoryservice",
 		"com.logichain.order_purchase",
-		"com.logichain.suppliers"
+		"com.logichain.suppliers",
+		"com.logichain.logistics"
 })
-public class AuthServiceApplication {
-
+public class AuthServiceApplication {	
 	public static void main(String[] args) {
 		SpringApplication.run(AuthServiceApplication.class, args);
 	}

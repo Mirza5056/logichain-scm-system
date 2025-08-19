@@ -7,5 +7,6 @@ import com.logichain.order_purchase.model.Order;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
     List<Order> findOrderByOrderId(String orderId); 
+    Optional<Order> findByOrderId(String orderId);
     //List<Order> findByCustomerId(Long orderId);
 }

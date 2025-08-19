@@ -49,6 +49,11 @@
 		
 		<!-- Internal Dependency -->
 		<dependency>
+			<groupId>com.logichain.logistics</groupId>
+			<artifactId>logistics-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.logichain.common</groupId>
 			<artifactId>common-lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

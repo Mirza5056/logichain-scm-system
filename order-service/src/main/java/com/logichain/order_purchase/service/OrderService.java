@@ -69,7 +69,6 @@ public class OrderService {
         }).toList();
 
         order.setItems(items);
-
         // Calculate total
         BigDecimal total = items.stream()
                 .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
