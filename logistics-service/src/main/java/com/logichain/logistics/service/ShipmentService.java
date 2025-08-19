@@ -1,6 +1,5 @@
 package com.logichain.logistics.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -54,7 +53,9 @@ public class ShipmentService {
                                 shipment.getCarrierName(), shipment.getOrder().getOrderId(),
                                 shipment.getOrder().getUsers().getUsername(), shipment.getOrder().getUsers().getEmail(),
                                 item.getProduct().getName(), item.getQuantity(), shipment.getOrder().getCreatedAt(),
-                                shipment.getOrder().getOrderType(), shipment.getOrder().getOrderStatus(),null,null)))
+                                shipment.getOrder().getOrderType(), shipment.getOrder().getOrderStatus())))
                 .collect(Collectors.toList());
+
+                // some code commit to dev before main
     }
 }
