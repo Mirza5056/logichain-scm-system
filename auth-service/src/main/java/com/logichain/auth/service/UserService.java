@@ -33,7 +33,9 @@ public class UserService {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already exits.");
         }
-
+        if(userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email already exists.");
+        }
         Users user = new Users();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());

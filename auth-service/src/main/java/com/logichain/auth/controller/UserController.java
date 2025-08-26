@@ -38,10 +38,10 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         try {
             String message = userService.registerUser(request);
-            MessageResponse response = new MessageResponse(false, message);
+            MessageResponse response = new MessageResponse(true, message);
             return ResponseEntity.ok(response);
         } catch (RuntimeException r) {
-            return ResponseEntity.badRequest().body(r.getMessage());
+            return ResponseEntity.badRequest().body(new MessageResponse(false, r.getMessage()));
         }
     }
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")

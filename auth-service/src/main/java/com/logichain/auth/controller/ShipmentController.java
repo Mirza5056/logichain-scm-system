@@ -13,7 +13,8 @@ import com.logichain.common.dto.MessageResponse;
 import com.logichain.logistics.dto.ShipmentsDetailsDTO;
 import com.logichain.logistics.model.Shipments;
 import com.logichain.logistics.service.ShipmentService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/shipments")
 public class ShipmentController {

@@ -16,7 +16,8 @@ import com.logichain.order_purchase.dto.OrderDetailsDTO;
 import com.logichain.order_purchase.dto.OrderRequestDTO;
 import com.logichain.order_purchase.model.Order;
 import com.logichain.order_purchase.service.OrderService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/orders")
 public class OrderController {

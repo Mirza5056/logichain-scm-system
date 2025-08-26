@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logichain.suppliers.model.PurchaseOrder;
 import com.logichain.suppliers.service.PurchaseOrderService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/purchaseorder")
 public class PurchaseOrderController {

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.logichain.common.dto.MessageResponse;
 import com.logichain.logistics.model.ShipmentsTrackingEvents;
 import com.logichain.logistics.service.ShipmentTrackingService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/tracking")
 public class ShipmentTrackingController {

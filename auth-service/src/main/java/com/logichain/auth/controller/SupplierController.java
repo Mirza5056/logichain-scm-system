@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logichain.suppliers.model.Suppliers;
 import com.logichain.suppliers.service.SupplierService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/suppliers")
 public class SupplierController {

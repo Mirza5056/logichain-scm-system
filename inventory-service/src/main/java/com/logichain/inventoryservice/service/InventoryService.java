@@ -38,6 +38,10 @@ public class InventoryService {
         item.setLocalDateTime(LocalDateTime.now());
         return inventoryRepository.save(item);
     }
+    
+    public List<InventoryItem> getAllInventoryItem() {
+        return inventoryRepository.findAll();
+    }
 
     public List<InventoryItem> getInventoryItemByWarehouse(Long warehouseId) {
         Warehouse warehouse = warehouseService.getWarehouseById(warehouseId);

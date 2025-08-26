@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logichain.inventoryservice.model.Warehouse;
 import com.logichain.inventoryservice.service.WarehouseService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/warehouse")
 public class WarehouseController {
