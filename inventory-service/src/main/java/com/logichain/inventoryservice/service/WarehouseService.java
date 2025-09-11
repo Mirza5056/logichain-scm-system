@@ -3,6 +3,8 @@ package com.logichain.inventoryservice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
+
+import com.logichain.inventoryservice.model.EntityStatus;
 import com.logichain.inventoryservice.model.Warehouse;
 import com.logichain.inventoryservice.repository.WarehouseRepository;
 
@@ -12,7 +14,10 @@ public class WarehouseService {
     private WarehouseRepository warehouseRepository;
 
     public Warehouse createWarehouse(Warehouse warehouse) {
-        if(warehouseRepository.existsByName(warehouse.getName())) {
+        if(warehouse.getCapacity() == null) {
+            throw new IllegalArgumentException("warehouse capacity cannot be null.");
+        }
+        if (warehouseRepository.existsByName(warehouse.getName())) {
             throw new RuntimeException("Warehouse already exists");
         }
         return warehouseRepository.save(warehouse);
@@ -20,6 +25,14 @@ public class WarehouseService {
 
     public List<Warehouse> getAllWarehouse() {
         return warehouseRepository.findAll();
+    }
+
+    public List<Warehouse> getWarehouseByStatus(EntityStatus status) {
+        List<Warehouse> warehouses = warehouseRepository.findByStatus(status);
+        if (warehouses.isEmpty()) {
+            throw new RuntimeException("No warehouses found with status " + status);
+        }
+        return warehouses;
     }
 
     public Warehouse getWarehouseById(Long id) {

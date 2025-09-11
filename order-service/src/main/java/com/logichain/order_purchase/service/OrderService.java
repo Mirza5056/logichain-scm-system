@@ -12,6 +12,7 @@ import com.logichain.common.model.Product;
 import com.logichain.common.model.Users;
 import com.logichain.common.repository.ProductRepository;
 import com.logichain.common.repository.UserRepository;
+import com.logichain.order_purchase.dto.OrderDetailsByCustomer;
 import com.logichain.order_purchase.dto.OrderDetailsDTO;
 import com.logichain.order_purchase.dto.OrderRequestDTO;
 import com.logichain.order_purchase.model.Order;
@@ -43,7 +44,7 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("Invalid customer id"));
 
         Random random = new Random();
-        String numberId = "LOGI"+(100000 + random.nextInt(900000));
+        String numberId = "LOGI" + (100000 + random.nextInt(900000));
         Order order = new Order();
         order.setOrderId(numberId);
         order.setUsers(customer);
@@ -85,6 +86,19 @@ public class OrderService {
     // return orderRepository.save(order);
     // }
 
+    public List<OrderDetailsByCustomer> getOrderDetailsByCustomerId(Long userId) {
+        List<Order> orders = orderRepository.findByUserId(userId);
+        if (orders == null || orders.isEmpty()) {
+            throw new RuntimeException("No orders found for user id: " + userId);
+        }
+        return orders.stream()
+                .flatMap(order -> order.getItems().stream()
+                        .map(prod -> new OrderDetailsByCustomer(order.getOrderId(), prod.getProduct().getName(),
+                                prod.getQuantity(), prod.getPrice(), order.getTotalAmount(), order.getCreatedAt(),
+                                order.getOrderType(), order.getOrderStatus())))
+                .collect(Collectors.toList());
+    }
+
     public List<OrderDetailsDTO> getOrderById(String orderId) {
         List<Order> orders = orderRepository.findOrderByOrderId(orderId);
         if (orders == null || orders.isEmpty()) {
@@ -101,8 +115,7 @@ public class OrderService {
                         order.getTotalAmount(),
                         order.getCreatedAt(),
                         order.getOrderType(),
-                        order.getOrderStatus()
-                        )))
+                        order.getOrderStatus())))
                 .collect(Collectors.toList());
     }
 
@@ -120,8 +133,7 @@ public class OrderService {
                         order.getTotalAmount(),
                         order.getCreatedAt(),
                         order.getOrderType(),
-                        order.getOrderStatus()
-                        )))
+                        order.getOrderStatus())))
                 .collect(Collectors.toList());
     }
 }

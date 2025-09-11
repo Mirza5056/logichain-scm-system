@@ -33,6 +33,9 @@ public class SupplierService {
         suppliers.setContactEmail(suppliersDetails.getContactEmail());
         suppliers.setPhoneNumber(suppliersDetails.getPhoneNumber());
         suppliers.setRating(suppliersDetails.getRating());
+        suppliers.setAddress(suppliersDetails.getAddress());
+        suppliers.setProductsCategory(suppliersDetails.getProductsCategory());
+        suppliers.setContactPerson(suppliersDetails.getContactPerson());
         return supplierRepository.save(suppliers);
     }
 

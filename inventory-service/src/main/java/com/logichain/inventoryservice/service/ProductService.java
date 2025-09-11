@@ -46,7 +46,9 @@ public class ProductService {
                         product.getDescription(),
                         product.getPrice(),
                         product.getImage(),
-                        product.getId()))
+                        product.getId(),
+                        product.getHsnCode(),
+                        product.getCategory().getName(),product.getProductCreated(),product.getProductExpiry()))
                 .collect(Collectors.toList());
     }
 

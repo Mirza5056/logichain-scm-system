@@ -25,6 +25,32 @@ public class Suppliers {
     private Integer phoneNumber;
     @Column(name = "supplier_rating")
     private Float rating;
+
+    @Column(name = "contact_person",nullable = false)
+    private String contactPerson;
+    @Column(name = "products_category")
+    private String productsCategory;
+    @Column(name = "address",nullable = false)
+    private String address;
+
+    public String getContactPerson() {
+        return contactPerson;
+    }
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+    public String getProductsCategory() {
+        return productsCategory;
+    }
+    public void setProductsCategory(String productsCategory) {
+        this.productsCategory = productsCategory;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
     public Long getId() {
         return id;
     }

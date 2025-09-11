@@ -57,7 +57,7 @@ public class UserController {
         return ResponseEntity.ok(staffs);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/getMembers")
     public ResponseEntity<List<UserDTO>> getAllMember() {
         List<UserDTO> staffs = userService.getManagerMember();

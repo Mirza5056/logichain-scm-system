@@ -13,7 +13,6 @@ import com.logichain.common.model.Users;
 public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByEmail(String email);
     Optional<Users> findById(Long id);
-
     List<Users> findByRolesName(ERole name);
     
     Optional<Users> findUserDTOById(Long id);

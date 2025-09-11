@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.logichain.common.model.Users;
 import com.logichain.common.repository.UserRepository;
-
-
+import com.logichain.security.util.UserPrincipal;
  
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -22,11 +21,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         Users user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                user.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
-                        .collect(Collectors.toList()));
+        // return new org.springframework.security.core.userdetails.User(
+        //         user.getEmail(),
+        //         user.getPassword(),
+        //         user.getRoles().stream()
+        //                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
+        //                 .collect(Collectors.toList()));
+        return new  UserPrincipal(user);
     }
 }

@@ -39,7 +39,7 @@ public class ProductController {
     @Value("${upload.dir}")
     private String uploadProductImage;
 
-    @PostMapping(value = "/addProduct", consumes = { "multipart/form-data" })
+    @PostMapping( consumes = { "multipart/form-data" })
     public ResponseEntity<?> addProduct(@RequestParam("categoryId") Long categoryId,@RequestParam("description") String description,
             @RequestParam("image") MultipartFile imageFile, @RequestParam("name") String name,
             @RequestParam("hsnCode") String hsnCode, @RequestParam("price") BigDecimal price,

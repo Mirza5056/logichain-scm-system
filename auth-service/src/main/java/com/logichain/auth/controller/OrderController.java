@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 import com.logichain.common.dto.MessageResponse;
+import com.logichain.order_purchase.dto.OrderDetailsByCustomer;
 import com.logichain.order_purchase.dto.OrderDetailsDTO;
 import com.logichain.order_purchase.dto.OrderRequestDTO;
 import com.logichain.order_purchase.model.Order;
@@ -62,6 +63,17 @@ public class OrderController {
         try
         {
             return ResponseEntity.ok(orderService.getOrderById(orderId));
+        }catch(RuntimeException r) {
+            return ResponseEntity.badRequest().body(new MessageResponse(false, r.getMessage()));
+        }
+    }
+
+
+    @GetMapping("/getOrderByUserId")
+    public ResponseEntity<?> getOrderByUserId(@RequestParam Long userId) {
+        try
+        {
+            return ResponseEntity.ok(orderService.getOrderDetailsByCustomerId(userId));
         }catch(RuntimeException r) {
             return ResponseEntity.badRequest().body(new MessageResponse(false, r.getMessage()));
         }

@@ -8,6 +8,44 @@ public class ProductDetailsDTO {
     private BigDecimal productPrice;
     private String productImage;
     private Long productId;
+    private String hsnCode;
+
+    public String getProductCreated() {
+        return productCreated;
+    }
+
+    public void setProductCreated(String productCreated) {
+        this.productCreated = productCreated;
+    }
+
+    public String getProductExpiry() {
+        return productExpiry;
+    }
+
+    public void setProductExpiry(String productExpiry) {
+        this.productExpiry = productExpiry;
+    }
+
+    private String productCategory;
+    private String productCreated;
+    private String productExpiry;
+
+    public String getHsnCode() {
+        return hsnCode;
+    }
+
+    public void setHsnCode(String hsnCode) {
+        this.hsnCode = hsnCode;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
+
     public Long getProductId() {
         return productId;
     }
@@ -17,12 +55,17 @@ public class ProductDetailsDTO {
     }
 
     public ProductDetailsDTO(String productName, String productDescription,
-            BigDecimal productPrice, String productImage,Long productId) {
+            BigDecimal productPrice, String productImage, Long productId, String hsnCode, String productCategory,
+            String productCreated, String productExpiry) {
         this.productName = productName;
-        this.productId=productId;
+        this.productId = productId;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.productImage = "http://localhost:8080/uploads/" + productImage;
+        this.hsnCode = hsnCode;
+        this.productCategory = productCategory;
+        this.productCreated = productCreated;
+        this.productExpiry = productExpiry;
     }
 
     public String getProductName() {
